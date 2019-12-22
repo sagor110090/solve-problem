@@ -8,11 +8,12 @@ use App\User;
 class searchController extends Controller
 {
     public function autoSearch($search){
-        // dd($search);
-
-        $data = User::where('name', 'LIKE', $search.'%')
-                ->get();
-                // return response()->json($data);
+        if ($search=='') {
+            return response()->json();
+        }
+    
+        $data = User::where('name', 'LIKE', $search.'%')->take(10)->get();
+                return response()->json($data);
         // dd($data);
         $output = '';
         $output = '<div class="absolute z-10 list-group bg-white w-full rounded-t-none shadow-lg" style="    position: absolute;

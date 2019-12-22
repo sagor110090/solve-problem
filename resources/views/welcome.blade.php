@@ -22,7 +22,7 @@
         <div class="list-item">
             <label>Type a country name</label>
             <input type="text" name="country" id="country" placeholder="Enter country name" class="form-control">
-            <div id="country_list" class="">
+            <div id="country_list" class="" style="position: absolute;z-index: 10;">
             </div>
         </div>
         <input type="text">
@@ -32,23 +32,35 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <script>
-        // jQuery wait till the page is fullt loaded
-         $(document).ready(function () {
+        $(document).ready(function () {
                 $('#country').on('keyup',function() {
                     var query = $(this).val();
-
-                    $.ajax({
+                    if (query.length>=2 ) {
+                        $.ajax({
                         type: "GET",
                         url: "/search/"+query,
                         data:{query},
                         success:function (data) {
                             $('#country_list').fadeIn();
-                            $('#country_list').html(data);
+                            // $('#country_list').html(data);
+                            // $('#country_list').html('<div class="absolute z-10 list-group bg-white w-full rounded-t-none shadow-lg" style="    position: absolute;z-index: 10;">');
+                            // if (data>0) {
+                                $('.dropdown-item').remove();
+
+                                $.each(data, function (indexInArray, value) { 
+                                    $('#country_list').append('<div class="list-group bg-white w-full rounded-t-none shadow-lg" ><a href="#" class="dropdown-item" >'+value.name+'</a></div>'
+                                    );
+
+                                    // '<a href="#" class="dropdown-item" >'+value.name+'</a>'
+                                    
+                                });
+                            // }
                         }
-                    });
+                        });
+                    }
+                    
             });
 
-              // initiate a click function on each search result
               $(document).on('click', 'a', function(){
                     var value = $(this).text();
                     $('#country').val(value);
