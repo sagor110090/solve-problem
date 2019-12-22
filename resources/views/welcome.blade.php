@@ -20,12 +20,12 @@
 <body>
     <div class="container" style="margin-top: 50px;">
         <div class="list-item">
-            <label>Type a country name</label>
-            <input type="text" name="country" id="country" placeholder="Enter country name" class="form-control">
-            <div id="country_list" class="" style="position: absolute;z-index: 10;">
+            <label>Type a search</label>
+            <input type="text" id="search" placeholder="Enter search name" class="form-control">
+            <div id="search_list" class="" style="position: absolute;z-index: 10;">
             </div>
         </div>
-        <input type="text">
+        <input type="text" id="email" class="form-control" style="margin-top: 10px;">
 
     </div>
 
@@ -33,7 +33,7 @@
 
     <script>
         $(document).ready(function () {
-                $('#country').on('keyup',function() {
+                $('#search').on('keyup',function() {
                     var query = $(this).val();
                     if (query.length>=2 ) {
                         $.ajax({
@@ -41,35 +41,31 @@
                         url: "/search/"+query,
                         data:{query},
                         success:function (data) {
-                            $('#country_list').fadeIn();
-                            // $('#country_list').html(data);
-                            // $('#country_list').html('<div class="absolute z-10 list-group bg-white w-full rounded-t-none shadow-lg" style="    position: absolute;z-index: 10;">');
-                            // if (data>0) {
+                            $('#search_list').fadeIn();
                                 $('.dropdown-item').remove();
-
-                                $.each(data, function (indexInArray, value) { 
-                                    $('#country_list').append('<div class="list-group bg-white w-full rounded-t-none shadow-lg" ><a href="#" class="dropdown-item" >'+value.name+'</a></div>'
+                                $.each(data, function (i, value) { 
+                                    $('#search_list').append('<div class="list-group bg-white w-full rounded-t-none shadow-lg" ><a href="#" class="dropdown-item" >'+value.name+'</a></div>'
                                     );
-
-                                    // '<a href="#" class="dropdown-item" >'+value.name+'</a>'
-                                    
                                 });
-                            // }
-                        }
+                                $(document).on('click', 'a', function(){
+                                    var value = $(this).text();
+                                    $('#email').val();   
+                                    $.each(data, function (i, value) { 
+                                        $('#search').val(value.name);   
+                                        $('#email').val(value.email);   
+                                    });
+                                    $('#search_list').html("");
+                            });
+                                    }
                         });
                     }
                     
             });
 
-              $(document).on('click', 'a', function(){
-                    var value = $(this).text();
-                    $('#country').val(value);
-                    $('#country_list').html("");
-                });
+              
               $(document).on('click', 'html', function(){
-                    // var value = $(this).text();
-                    $('#country').val();
-                    $('#country_list').html("");
+                    $('#search').val();
+                    $('#search_list').html("");
                 });
             });
             
