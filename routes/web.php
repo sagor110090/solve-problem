@@ -19,4 +19,5 @@ Route::get('/settings', function () {
 });
 Route::get('/table','migrate@createTable');
 Route::get('/json','json@store');
+// Route::get('/search/{search}','searchController@autoSearch');
 Route::get('/search/{search}','searchController@autoSearch');

@@ -8,7 +8,7 @@ use App\User;
 class searchController extends Controller
 {
     public function autoSearch($search){
-        $data = User::where('name', 'LIKE', $search.'%')->take(10)->get();
+        $data = User::where('name', 'LIKE', $search.'%')->get();
         return response()->json($data);
         
     }
