@@ -56,7 +56,8 @@
                         success:function (data) {
                             $('#search_list').fadeIn();
                                 $('.dropdown-item').remove();
-                                for (let j = 0; j < data.length; j++) {
+                                // for (let j = 0; j < data.length; j++) {
+                                    $.each(data, function (j, value) { 
                                     $('#search_list').append('<div class="list-group bg-white w-full rounded-t-none shadow-lg" ><a href="#" id="searchItem_'+j+'" class="dropdown-item" >'+ data[j].name+'</a></div>'
                                     );
 
@@ -79,7 +80,7 @@
                                     
                                     
                                     
-                                }
+                                });
                                 
                                 // $.each(data, function (i, value) { 
                                 //     $('#search_list').append('<div class="list-group bg-white w-full rounded-t-none shadow-lg" ><a href="#" id="searchItem_'+i+'" class="dropdown-item" >'+value.name+'</a></div>'
